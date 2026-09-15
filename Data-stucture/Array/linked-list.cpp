@@ -1,36 +1,54 @@
-#include<iostream>
-using namespace std;
-struct Node
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
 {
     int data;
-    Node* next;
+    struct node *next;
 };
+
 int main()
 {
-    Node *head = NULL, *newNode,*temp;
+    struct node *head, *newnode, *temp;
     int input = 1;
-    cout<< "---Create a Linked list---"<<endl;
-    while(input){
-        newNode = new Node;
-        cout << "Enter data : ";
-        cin>>newNode->data;
-        newNode->next= NULL;
-        if(head == NULL){
-            head = temp = newNode;
+
+    printf("Create a Linked List\n");
+
+    head = NULL;
+
+    while(input)
+    {
+        newnode = (struct node*)malloc(sizeof(struct node));
+
+        printf("Enter data: ");
+        scanf("%d", &newnode->data);
+
+        newnode->next = NULL;
+
+        if(head == NULL)
+        {
+            head = newnode;
+            temp = newnode;
         }
-        else{
-            temp->next= newNode;
-            temp = newNode;
+        else
+        {
+            temp->next = newnode;
+            temp = newnode;
         }
-        cout << "To continue creating node press 1,else press 0: ";
-        cin >> input;
+
+        printf("To continue creating node press 1, else press 0: ");
+        scanf("%d", &input);
     }
-    cout<< "\n---Displaying Linked List Data---"<<endl;
+
+    printf("\nLinked List: ");
+
     temp = head;
-    while(temp != NULL){
-        cout<<temp->data<< " ->";
-        temp = temp -> next;
+
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
     }
-    cout<< "NULL"<<endl;
+
     return 0;
 }
