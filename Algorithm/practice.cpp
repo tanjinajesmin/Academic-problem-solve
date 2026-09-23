@@ -1,60 +1,54 @@
 #include<iostream>
+#include<vector>
 using namespace std;
-struct Item
-{
-    int weight;
-    int profit;
-    double Ratio;
-    char name;
 
+struct Activity
+{
+    char name[10];
+    int start_time;
+    int finish_time;
 };
+
 int main()
 {
     int n;
-    cout << "Enter the Number of Item : ";
+    cout << "Enter the no, of Items : ";
     cin >> n;
-    Item item[n];
-    for(int i=0;i<n;i++){
-        cout << "Enter the Item name " << i+1 << " : ";
-        cin >> item[i].name;
-        cout << "Enter the Weight " << i+1 << " : ";
-        cin >> item[i].weight;
-        cout << "Enter the profit " << i+1 << " : ";
-        cin >> item[i].profit;
-        item[i].Ratio = (double)item[i].profit/item[i].weight;
-    }
-    int capacity;
-    cout << "Enter the Knapsack capacity : ";
-    cin >> capacity;
+    Activity activity[n];
 
+    for(int i=0;i<n;i++){
+        cout << "Enter the name of Item "<< i+1 << " : ";
+        cin >> activity[i].name;
+        cout<< "Enter the start time "<< i+1 << " : ";
+        cin >> activity[i].start_time;
+        cout << "Enter the finish time "<< i+1 << " : ";
+        cin >> activity[i].finish_time;
+    }
     for(int i=0;i<n-1;i++){
         for(int j=i+1;j<n;j++){
-            if(item[i].Ratio <item[i].Ratio){
-                Item temp = item[i];
-                item[i] = item[j];
-                item[j] = temp;
+            if(activity[i].finish_time > activity[j].finish_time){
+                Activity temp = activity[i];
+                activity[i]=activity[j];
+                activity[j]=temp;
             }
         }
     }
-    cout << " Sorted Items : "<<endl;
+    vector<string>selected_activity;
+    selected_activity.push_back(activity[0].name);
+    int last_finish_time = activity[0].finish_time;
+    int count = 1;
 
     for(int i=0;i<n;i++){
-        cout << "Item : "<<item[i].name
-        << " weight : "<<item[i].weight;
-        << " profit : "<<item[i].profit;
-        <<endl;
-    }
-
-    double profit = 0.0;
-    int Rem_capacity = capacity;
-    cout << " Item taken : " << endl;
-    for(int i=0;i<n;i++){
-        if(Rem_capacity <= 0){
-            break;
-        }
-        else if(item[i].weight = Rem_capacity){
-            cout << ""
+         if(activity[i].start_time >=last_finish_time){
+          selected_activity.push_back(activity[i].name);
+         last_finish_time = activity[i].finish_time;
+        count++;
         }
     }
-
+    cout << "Total no.of selected activity : "<< count << endl;
+    cout << "Selected activity are : "<< endl;
+    for(int i=0;i<selected_activity.size();i++){
+        cout << selected_activity[i] << endl;
+    }
+    return 0;
 }
